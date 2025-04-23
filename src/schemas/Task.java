@@ -1,8 +1,10 @@
 package schemas;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Клас, який представляє задачу у списку TODO.
- * Містить інформацію про ідентифікатор задачі, дату її створення та опис.
  */
 public class Task {
     private String value; // Опис задачі
@@ -22,40 +24,34 @@ public class Task {
         this.value = value;
     }
 
-    /**
-     * Отримати опис задачі.
-     *
-     * @return Опис задачі
-     */
     public String getValue() {
         return value;
     }
 
-    /**
-     * Отримати ідентифікатор задачі.
-     *
-     * @return Ідентифікатор задачі
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     * Отримати дату та час створення задачі.
-     *
-     * @return Дата та час створення задачі
-     */
     public String getCreatedAt() {
         return createdAt;
     }
 
     /**
-     * Переоприділений метод toString для повернення текстового представлення задачі.
+     * Перетворення createdAt у LocalDateTime.
      *
-     * @return Текстове представлення задачі
+     * @return Дата та час створення задачі у LocalDateTime
      */
+    public LocalDateTime getCreatedAtAsDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(createdAt, formatter);
+    }
+
     @Override
     public String toString() {
-        return super.toString();
+        return "Task{" +
+                "id='" + id + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", value='" + value + '\'' +
+                '}';
     }
 }
