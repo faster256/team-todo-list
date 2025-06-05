@@ -1,5 +1,6 @@
 import schemas.Task;
-import utils.FileReader;
+import utils.TaskFileReader;
+import utils.FileWriterUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -8,26 +9,27 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        FileReader fileReader = new FileReader("./src/data/todos.txt");
+        TaskFileReader fileReader = new TaskFileReader("./src/data/todos.txt");
         List<Task> todos = new ArrayList<>();
-
         fileReader.readFile(todos);
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Виберіть варіант сортування:");
-        System.out.println("1 - За датою додавання до списку");
-        System.out.println("2 - За часом створення задачі");
+        System.out.println("Виберіть опцію:");
+        System.out.println("1 - Вивести список (за датою додавання)");
+        System.out.println("2 - Вивести список (за часом створення)");
+        System.out.println("3 - Зберегти список у файл");
 
         int choice = scanner.nextInt();
 
         if (choice == 1) {
-            // Сортування за датою додавання (за замовчуванням порядок у списку)
             todos.forEach(todo -> System.out.println(todo.getValue()));
         } else if (choice == 2) {
-            // Сортування за часом створення задачі
             todos.stream()
                     .sorted(Comparator.comparing(Task::getCreatedAtAsDateTime))
                     .forEach(todo -> System.out.println(todo.getValue()));
+        } else if (choice == 3) {
+            FileWriterUtil writer = new FileWriterUtil("./src/data/todos_saved.txt");
+            writer.writeToFile(todos);
         } else {
             System.out.println("Невірний вибір. Список буде виведений без сортування.");
             todos.forEach(todo -> System.out.println(todo.getValue()));

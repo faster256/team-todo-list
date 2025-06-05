@@ -7,10 +7,10 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-public class FileReader {
+public class TaskFileReader {
     private String fileName;
 
-    public FileReader(String fileName) {
+    public TaskFileReader(String fileName) {
         this.fileName = fileName;
     }
 
@@ -21,12 +21,11 @@ public class FileReader {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
 
-                // Розділяємо рядок на частини за пробілами
-                String[] parts = line.split(" ", 4); // Розділяємо на 4 частини
+                String[] parts = line.split(" ", 4);
                 if (parts.length >= 4) {
                     String id = parts[0];
                     String createdAt = parts[1] + " " + parts[2];
-                    String value = parts[3].substring(1, parts[3].length() - 1); // Прибираємо лапки
+                    String value = parts[3].substring(1, parts[3].length() - 1); // remove quotes
 
                     Task task = new Task(id, createdAt, value);
                     todos.add(task);
