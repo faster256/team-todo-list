@@ -25,6 +25,7 @@ public class Main {
             System.out.println("2 - Вивести список (за часом створення)");
             System.out.println("3 - Зберегти список у файл");
             System.out.println("4 - Вивести вміст файлу як текст");
+            System.out.println("5 - Сортувати за активністю (новіші задачі першими)");
             System.out.println("0 - Вихід");
 
             System.out.print("Ваш вибір: ");
@@ -45,6 +46,11 @@ public class Main {
                     break;
                 case 4:
                     printFileContents("./src/data/todos.txt");
+                    break;
+                case 5:
+                    todos.stream()
+                            .sorted(Comparator.comparing(Task::getCreatedAtAsDateTime).reversed())
+                            .forEach(todo -> System.out.println(todo.getValue()));
                     break;
                 case 0:
                     running = false;
